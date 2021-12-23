@@ -3,8 +3,15 @@ import { DeleteOutline } from "@material-ui/icons";
 import "./userList.css";
 import { userRows } from "../../sampleData";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const UserList = () => {
+  const [data, setData] = useState(userRows);
+
+  const handleDelete = (id) => {
+    setData(data.filter((item) => item.id !== id));
+  };
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -30,55 +37,23 @@ const UserList = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/users/" + params.row.id}>
+            <Link to={"/user/" + params.row.id}>
               <button className="userListEdit">Edit</button>
             </Link>
-            <DeleteOutline className="userListDelete" />
+            <DeleteOutline
+              className="userListDelete"
+              onClick={() => handleDelete(params.row.id)}
+            />
           </>
         );
       },
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      username: "John Snow",
-      avatar: "",
-      email: "johnsnow@gmail.com",
-      status: "active",
-      transaction: "$150.30",
-    },
-    {
-      id: 2,
-      username: "John Snow",
-      avatar: "",
-      email: "johnsnow@gmail.com",
-      status: "active",
-      transaction: "$150.30",
-    },
-    {
-      id: 3,
-      username: "John Snow",
-      avatar: "",
-      email: "johnsnow@gmail.com",
-      status: "active",
-      transaction: "$150.30",
-    },
-    {
-      id: 4,
-      username: "John Snow",
-      avatar: "",
-      email: "johnsnow@gmail.com",
-      status: "active",
-      transaction: "$150.30",
-    },
-  ];
-
   return (
     <div className="userList">
       <DataGrid
-        rows={userRows}
+        rows={data}
         disableSelectionOnClick
         columns={columns}
         pageSize={8}

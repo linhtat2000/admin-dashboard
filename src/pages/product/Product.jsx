@@ -1,7 +1,7 @@
 import "./product.css";
 
 const Product = () => {
-  return <div></div>;
+  return <div className="product"></div>;
 };
 
 export default Product;
